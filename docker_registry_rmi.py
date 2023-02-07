@@ -74,7 +74,7 @@ class DockerRegistryRMI(cmd.Cmd):
             tags = tags_list(self.host, name)
             if tags:
                 tags.sort()
-                self.tags[arg] = tags
+                self.tags[name] = tags
                 for tag in tags:
                     print(f'    {tag}')
 
