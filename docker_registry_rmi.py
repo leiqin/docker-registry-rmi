@@ -46,7 +46,11 @@ def get_digest(host, name, tag):
 
 def rmi(host, name, digest):
     res = session.delete(DIGEST_URL.format(host=host, name=name, tag=digest))
-    return res.status_code == 202
+    if res.status_code == 202:
+        return True
+    else:
+        print(res.text)
+        return False
 
 
 class DockerRegistryRMI(cmd.Cmd):
