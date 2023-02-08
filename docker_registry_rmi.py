@@ -33,16 +33,28 @@ def get_capath(host):
 
 def registry_catalog(host):
     res = session.get(CATALOG_URL.format(host=host))
-    return res.json()['repositories']
+    if res.status_code != 200:
+        print(res.text)
+        return []
+    else:
+        return res.json()['repositories']
 
 def tags_list(host, name):
     res = session.get(TAGLIST_URL.format(host=host, name=name))
-    return res.json()['tags']
+    if res.status_code != 200:
+        print(res.text)
+        return []
+    else:
+        return res.json()['tags']
 
 def get_digest(host, name, tag):
     res = session.head(DIGEST_URL.format(host=host, name=name, tag=tag), 
             headers={'Accept': 'application/vnd.docker.distribution.manifest.v2+json'})
-    return res.headers.get('docker-content-digest')
+    if res.status_code != 200:
+        print(res.text)
+        return ''
+    else:
+        return res.headers.get('docker-content-digest')
 
 def rmi(host, name, digest):
     res = session.delete(DIGEST_URL.format(host=host, name=name, tag=digest))
