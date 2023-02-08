@@ -2,6 +2,14 @@
 
 A script delete private docker registry images
 
+The script need `requests`.
+
+    pip install requests
+
+or
+
+    pip install -r requirements.txt
+
 You need set `storage.delete.enabled: true` in registry config. 
 
 This program only delete tag, 
